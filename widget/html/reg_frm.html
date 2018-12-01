@@ -8,8 +8,15 @@
     <link rel="stylesheet" type="text/css" href="../css/aui.css" />
     <link rel="stylesheet" type="text/css" href="../css/style.css"/>
     <link rel="stylesheet" type="text/css" href="../css/iconfont.css"/>
+    <style type="text/css">
+    	.myui-from {
+padding-top: 5rem;
+width: 80%;
+margin: auto;
+}
+    </style>
 </head>
-<body class="login-bg2">
+<body class="login-bg2" style="position: fixed;">
   <header class="aui-bar aui-bar-nav" id="aui-header" style="background-color:rgba(0,0,0,0) !important">
       <a class="aui-btn aui-pull-left" tapmode onclick="closeWin()">
           <span class="aui-iconfont aui-icon-left"></span>
@@ -94,7 +101,7 @@
       if(username.length < 6){
         api.alert({
             title: '警告！',
-            msg: '请输入6位以上密码',
+            msg: '请输入6位以上账号',
         });
         return;
       }
@@ -136,10 +143,12 @@
               values: {
                   name: username,
                   password:password,
-				  share:share
+				  share_ma:share,
+				  type:'App独立注册'
               }
           }
       },function(ret, err){
+      	//alert(ret)
           if (ret) {
               if (ret.code == 0) {
                 api.hideProgress();
@@ -157,7 +166,7 @@
                 api.closeWin({
                     name: 'login'
                 });
-                //openLogin();
+                openLogin();
 
 
                 api.ajax({
@@ -270,7 +279,7 @@
       var content = escape('#code#='+code_data);
       //alert(code_data);
       api.ajax({
-          url: 'http://v.juhe.cn/sms/send?mobile='+username+'&tpl_id=898989tpl_value='+content+'&key=888888888888888888',
+          url: 'http://v.juhe.cn/sms/send?mobile='+username+'&tpl_id=95861tpl_value='+content+'&key=b340980a9f1ca75927d61b173071fd80',
           method: 'get'
       },function(ret, err){
         // if (ret) {

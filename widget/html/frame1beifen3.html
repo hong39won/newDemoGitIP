@@ -16,13 +16,13 @@
 	<div class="logo">
 
 		<div class="zbText">
-			<h3>今日影院</h3>
+			<h3>今日影院演示</h3>
 			<p class="text">电影、电视、直播,汇聚各类节目</p>
 		</div>
 	</div>
 
 <li>
-<div class="weui-grid js_grid" onclick="vList()">
+<div class="weui-grid js_grid" onClick="vList()">
 <center>
 <img class="zhiboImg" src="../image/zhibo/video.png" >
 </center>
@@ -31,7 +31,7 @@
 </li>
 
 <li>
-<div class="weui-grid js_grid" onclick="tvList()">
+<div class="weui-grid js_grid" onClick="tvList()">
 <center>
 <img class="zhiboImg" src="../image/zhibo/tv.png" >
 </center>
@@ -40,7 +40,7 @@
 </li>
 
 <li>
-<div class="weui-grid js_grid" onclick="gameList()">
+<div class="weui-grid js_grid" onClick="gameList()">
 <center>
 <img class="zhiboImg" src="../image/zhibo/game.png" >
 </center>
@@ -49,25 +49,7 @@
 </li>
 
 <li>
-<div class="weui-grid js_grid" onclick="mnList()">
-<center>
-<img class="zhiboImg" src="../image/zhibo/mnvideo.png" >
-</center>
-<p class="text">美女视频</p>
-</div>
-</li>
-
-<li>
-<div class="weui-grid js_grid" onclick="openWin('zhibo_win')">
-<center>
-<img class="zhiboImg" src="../image/zhibo/zhibo.png" >
-</center>
-<p class="text">直播盒子</p>
-</div>
-</li>
-
-<li>
-<div class="weui-grid js_grid" onclick="List()">
+<div class="weui-grid js_grid" onClick="List()">
 <center>
 <img class="zhiboImg" src="../image/zhibo/daixu.png" >
 </center>
@@ -153,6 +135,37 @@ function gameList(){
 			vScrollBarEnabled:false,
 	});
 }
+
+function fenlei(){
+	var delay = 0;
+	if(api.systemType != 'ios'){
+			delay = 300;
+	}
+	api.openWin({
+			name: 'fenlei_win',
+			url: 'fenlei_win.html',
+			bounces:false,
+			delay: delay,
+			slidBackEnabled:true,
+			vScrollBarEnabled:false,
+	});
+}
+
+function zhibohezi(){
+	var delay = 0;
+	if(api.systemType != 'ios'){
+			delay = 300;
+	}
+	api.openWin({
+			name: 'zhibo_win',
+			url: 'zhibo_win.html',
+			bounces:false,
+			delay: delay,
+			slidBackEnabled:true,
+			vScrollBarEnabled:false,
+	});
+}
+
 
   function openWin(name){
       var time = localStorage.getItem('user_time');

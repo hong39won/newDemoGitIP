@@ -7,6 +7,7 @@
     <title>title</title>
     <link rel="stylesheet" type="text/css" href="../css/aui.css" />
     <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/iconfont.css"/>
 </head>
 <body class="login-bg2">
   <header class="aui-bar aui-bar-nav" id="aui-header" style="background-color:rgba(0,0,0,0) !important">
@@ -16,28 +17,29 @@
       <div id="title" class="aui-title">注册</div>
   </header>
 
-<!--  有验证码版本-->
 
   <div class="myui-from">
     <ul class="myui-from-list">
       <li class="myui-from-list-item">
         <div class="myui-code">
-          <input id="username" type="tel"  minlength="11" maxlength="11" placeholder="填写账号" class="myui-from-code-input">
-          <button id="btn1" type="button" name="button" style="width:20%;float:left;height: 2.2rem;" class="myui-from-code-button" onclick="getCode()">获取</button>
+          <input id="username" type="tel"  minlength="11" maxlength="11" placeholder="输入手机号码" class="myui-from-code-input">
+          <button id="btn1" type="button" name="button" style="width:20%;float:left;height: 2.2rem; display:none" class="myui-from-code-button" onclick="getCode()">获取</button>
         </div>
       </li>
       <li class="myui-from-list-item">
-        <input id="yzcode" type="tel" minlength="6" maxlength="6" placeholder="短信验证码" class="myui-from-list-item-input">
+        <input id="yzcode" type="tel" minlength="6" maxlength="6" placeholder="短信验证码" class="myui-from-list-item-input" style="display:none">
       </li>
       <li class="myui-from-list-item">
         <input id="password" type="password" placeholder="设置密码" class="myui-from-list-item-input">
       </li>
-
+	    <li class="myui-from-list-item">
+        <input id="password_reg" type="password" placeholder="再输入一次密码" class="myui-from-list-item-input">
+      </li>
+       <li class="myui-from-list-item">
+        <input id="share" type="tel" minlength="6" maxlength="6" placeholder="邀请码(选填)" class="myui-from-list-item-input">
+      </li>
       <li class="myui-from-list-item">
- <input id="share" type="tel" minlength="6" maxlength="6" placeholder="邀请码(选填)" class="myui-from-list-item-input">
-</li>
-      <li class="myui-from-list-item">
-        <button id="btn2" type="button" name="button" class="myui-from-list-item-button" onclick="toReg()">确认注册</button>
+        <button id="btn2" type="button" name="button" class="myui-from-list-item-button" onclick="toReg()">立即注册</button>
       </li>
     </ul>
   </div>
@@ -49,6 +51,7 @@
     var code_data = '';
     var user = '';
     var pass = '';
+	var pass02 = '';
     apiready = function () {
       api.parseTapmode();
       var header = $api.byId('aui-header');
@@ -59,88 +62,75 @@
     }
 
 
-
-
-    //去注册
+    //注册
     function toReg(){
       var username = $api.val($api.byId('username'));
       var password = $api.val($api.byId('password'));
-   var yzcode = $api.val($api.byId('yzcode'));
+	  var password_reg = $api.val($api.byId('password_reg'));
+      var yzcode = $api.val($api.byId('yzcode'));
       var share = $api.val($api.byId('share'));
       if(username == ''){
-    /*    api.alert({
-            title: '调皮~',
+        api.alert({
+            title: '警告！',
             msg: '请输入登录账号',
         });
-      原弹窗提示  */
-      api.toast({
-          msg: 'ε=(´ο｀*))) 调皮~   账号都没输入',
-      });
         return;
       }
-      if(password == ''){
-    /*        api.alert({
-            title: '调皮~',
+      if(password == '' || password_reg == ''){
+        api.alert({
+            title: '警告！',
             msg: '请输入密码',
         });
-      原弹窗提示  */
-      api.toast({
-           msg: 'ε=(´ο｀*))) 哎呀~   密码还没输入',
-      });
         return;
       }
 
-      // if(share == ''){
-      //   api.alert({
-      //       title: '调皮~',
-      //       msg: '密码不一致',
-      //   });
-      //   return;
-      // }
+       //if(share == ''){
+        // api.alert({
+        //     title: '警告！',
+        //     msg: '请输入邀请码',
+        // });
+        // return;
+       //}
       if(username.length < 6){
-      /*  api.alert({
-            title: '出错了',
-            msg: '请输入6位数以上账号',
-        });
-        */
-
-        api.toast({
-             msg: ' 请输入6位数以上账号 ',
-        });
-        return;
-      }
-   if(yzcode != code_data){
-      api.alert({
-          title: '错误提示',
-          msg: '您输入的验证码不正确',
-      });
-      return;
-    }
-    /*
-      if(localStorage.getItem('reg_name') == username){
         api.alert({
-            title: '错误提示',
-            msg: '手机号输入不一致',
+            title: '警告！',
+            msg: '请输入6位以上密码',
         });
         return;
       }
-      */
+
+	  if ($api.byId('password').value != $api.byId('password_reg').value) {
+                $api.byId('password_reg').focus();
+                api.toast({
+                    msg : '两次密码不一致，请重新输入!'
+                });
+                return;
+                 }
+      //if(yzcode != code_data){
+      //  api.alert({
+      //      title: '错误提示',
+      //      msg: '您输入的验证码不正确',
+      //  });
+      //  return;
+      //}
+      //if(localStorage.getItem('reg_name') == username){
+      //}else {
+        //api.alert({
+        //    title: '错误提示',
+       //     msg: '手机号输入不一致',
+       // });
+       // return;
+     // }  
       user = $api.val($api.byId('username'));
       pass = $api.val($api.byId('password'));
-
-      /*
+	  pass02 = $api.val($api.byId('password_reg'));
       api.showProgress({
           title: '注册中...',
           text: '请稍等...',
           modal: false
       });
-*/
-api.toast({
-     msg: ' 注册中 请稍等…… ',
-});
-
       api.ajax({
-          url: 'http://148.70.17.2/login/login/create.html',
+          url: 'http://ys.ziyuzile.vip/login/login/create.html',
           method: 'get',
           data: {
               values: {
@@ -170,7 +160,7 @@ api.toast({
 
 
                 api.ajax({
-                    url: 'http://148.70.17.2/login/login/veifys.html',
+                    url: 'http://ys.ziyuzile.vip/login/login/veifys.html',
                     method: 'get',
                     data: {
                         values: {
@@ -182,13 +172,8 @@ api.toast({
                 },function(ret, err){
                     if (ret) {
                       if (ret.code == 0) {
-                        /*    api.hideProgress();
-                            alert('账号或密码不正确');
-              原弹窗提示  */
-                            api.toast({
-                                msg: '(ｷ｀ﾟДﾟ´)!! 账号或密码不正确'
-                            });
-
+                        api.hideProgress();
+                        alert('账号或密码不正确');
                         return;
                       }else if (ret.code == 1) {
                         //alert( JSON.stringify( ret ) );
@@ -219,11 +204,7 @@ api.toast({
                       }
                     } else {
                       api.hideProgress();
-                      /*   alert('网络错误！');
-                            原弹窗提示*/
-                            api.toast({
-                                msg: '(ｷ｀ﾟДﾟ´)!!  网络错误 请检查！'
-                            });
+                      alert('网络错误！');
                       //alert( JSON.stringify( err ) );
                       return;
                     }
@@ -288,7 +269,7 @@ api.toast({
       var content = escape('#code#='+code_data);
       //alert(code_data);
       api.ajax({
-          url: 'http://v.juhe.cn/sms/send?mobile='+username+'&tpl_id=105149&tpl_value='+content+'&key=f80ed695135b7464a3063cecdc60f794',
+          url: 'http://v.juhe.cn/sms/send?mobile='+username+'&tpl_id=95504&tpl_value='+content+'&key=c729ee754073fc6e349d4b4ddf5c61bd',
           method: 'get'
       },function(ret, err){
         // if (ret) {
